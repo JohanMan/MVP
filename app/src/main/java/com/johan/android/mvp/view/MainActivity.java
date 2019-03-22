@@ -14,8 +14,8 @@ import com.johan.frame.mvp.PresenterHelper;
 
 public class MainActivity extends AppCompatActivity implements CodeContract.CodeView, LoginContract.LoginView {
 
-    public CodePresenter codePresenter;
-    public LoginPresenter loginPresenter;
+    CodePresenter codePresenter;
+    LoginPresenter loginPresenter;
 
     private TextView resultView;
 

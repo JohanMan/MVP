@@ -14,7 +14,7 @@ public class PresenterHelper {
             Field[] fields = viewClass.getDeclaredFields();
             for (Field field : fields) {
                 Class fieldType = field.getType();
-                if (fieldType.getSuperclass() != Presenter.class) continue;
+                if (isPresenter(fieldType)) continue;
                 Presenter presenter = (Presenter) fieldType.newInstance();
                 presenter.attachView(view);
                 field.setAccessible(true);
@@ -33,7 +33,7 @@ public class PresenterHelper {
             Field[] fields = viewClass.getDeclaredFields();
             for (Field field : fields) {
                 Class fieldType = field.getType();
-                if (fieldType.getSuperclass() != Presenter.class) continue;
+                if (isPresenter(fieldType)) continue;
                 field.setAccessible(true);
                 if (field.get(view) == null) continue;
                 Presenter presenter = (Presenter) field.get(view);
@@ -43,6 +43,16 @@ public class PresenterHelper {
         } catch (IllegalAccessException e) {
             e.printStackTrace();
         }
+    }
+
+    private static boolean isPresenter(Class fieldType) {
+        while (fieldType != Presenter.class) {
+            fieldType = fieldType.getSuperclass();
+            if (fieldType == null) {
+                return false;
+            }
+        }
+        return true;
     }
 
 }
